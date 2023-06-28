@@ -1,0 +1,58 @@
+window.addEventListener("DOMContentLoaded", () => {
+    const tabs = document.querySelectorAll(".tabs__item");
+        playBtn = document.querySelector("#playVideo"),
+        video = document.querySelector("#video");
+    playBtn.addEventListener('click', function() {
+        video.play();
+        video.setAttribute('controls', 'controls');
+        playBtn.style.display = "none";
+    })
+    video.addEventListener('ended', function() {
+        this.src = this.src;
+        playBtn.style.display = "block";
+        video.removeAttribute('controls');
+    })
+    tabs.forEach(elem => {
+        if (!elem.classList.contains("tabs__item_active")) {
+            elem.addEventListener("click", () => {
+                tabs.forEach(otherItem => {
+                    if (otherItem.classList.contains("tabs__item_active")) {
+                        otherItem.classList.remove("tabs__item_active");
+                    }
+                })
+                elem.classList.add("tabs__item_active")
+             });
+        }
+    });
+
+    $('.carousel').slick({
+        autoplay: true,
+        autoplaySpeed: 5000,
+        prevArrow: '<div class="carousel__arrow carousel__prev"><i class="fas fa-chevron-left"></i></div>',
+        nextArrow: '<div class="carousel__arrow carousel__next"><i class="fas fa-chevron-right"></i></div>',
+      });
+    $('#buyNowBtn').on('click', popupOpen);
+    $('#tryForBtn').on('click', popupOpen);
+    $('.popup__close').on('click', () => {
+        $('.popup').removeClass('popup__active');
+        $('body').css('overflow', 'visible');   
+    })
+    function popupOpen() {
+        $('.popup').addClass('popup__active');
+        $('body').css('overflow', 'hidden');
+    }  
+});
+
+// Nav Icon
+
+const navBtn = document.querySelector('.nav-icon-btn');
+const navIcon = document.querySelector('.nav-icon');
+const nav = document.querySelector('.header');
+const showBtn = document.querySelector('.sign__btn');
+
+navBtn.onclick = function () {
+    navIcon.classList.toggle('nav-icon--active');
+    nav.classList.toggle('header--mobile');
+    document.body.classList.toggle('no-scroll');
+    showBtn.classList.toggle('show')
+}
